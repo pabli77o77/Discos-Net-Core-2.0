@@ -18,7 +18,7 @@ namespace Disqueria.Controllers
             this.repo = _repo;
         }
         // GET: Artistas
-        public IActionResult Index()
+        public ActionResult Index()
         {
             return View(repo.GetAll());
         }
@@ -60,7 +60,7 @@ namespace Disqueria.Controllers
         // GET: Artistas/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(repo.GetID(id));
         }
 
         // POST: Artistas/Edit/5
@@ -71,6 +71,12 @@ namespace Disqueria.Controllers
             try
             {
                 // TODO: Add update logic here
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                repo.Update(model);
+                repo.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -82,7 +88,7 @@ namespace Disqueria.Controllers
         // GET: Artistas/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(repo.GetID(id));
         }
 
         // POST: Artistas/Delete/5
