@@ -30,7 +30,7 @@ namespace Disqueria.Controllers
         }
 
         // GET: Artistas/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
