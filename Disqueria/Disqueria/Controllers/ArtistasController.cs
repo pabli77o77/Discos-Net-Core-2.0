@@ -30,7 +30,7 @@ namespace Disqueria.Controllers
         }
 
         // GET: Artistas/Create
-        public IActionResult Create()
+        public ActionResult Create()
         {
             return View();
         }
@@ -42,12 +42,12 @@ namespace Disqueria.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
-                    repo.Add(model);
-                    repo.Save();
-                    return RedirectToAction(nameof(Index));
+                    return BadRequest(ModelState);
                 }
+                repo.Add(model);
+                repo.Save();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -92,7 +92,7 @@ namespace Disqueria.Controllers
         }
 
         // POST: Artistas/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {

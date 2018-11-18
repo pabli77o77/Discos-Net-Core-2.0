@@ -12,6 +12,7 @@ namespace Disqueria.Controllers
     public class DiscograficasController : Controller
     {
         protected readonly IGenericRepository<Discografica> repo;
+
         public DiscograficasController(IGenericRepository<Discografica> _repo)
         {
             this.repo = _repo;
@@ -20,13 +21,13 @@ namespace Disqueria.Controllers
         // GET: Canciones
         public ActionResult Index()
         {
-            return View();
+            return View(repo.GetAll());
         }
 
         // GET: Canciones/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View(repo.GetID(id));
         }
 
         // GET: Canciones/Create
@@ -35,14 +36,13 @@ namespace Disqueria.Controllers
             return View();
         }
 
-        // POST: Canciones/Create
+        // POST: Discografica/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Discografica model)
         {
             try
             {
-                // TODO: Add insert logic here
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
@@ -57,21 +57,26 @@ namespace Disqueria.Controllers
             }
         }
 
-        // GET: Canciones/Edit/5
+        // GET: Discografica/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(repo.GetID(id));
         }
 
-        // POST: Canciones/Edit/5
+        // POST: Discografica/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Discografica model)
         {
             try
             {
                 // TODO: Add update logic here
-
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                repo.Update(model);
+                repo.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -80,14 +85,14 @@ namespace Disqueria.Controllers
             }
         }
 
-        // GET: Canciones/Delete/5
+        // GET: Discografica/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(repo.GetID(id));
         }
 
         // POST: Canciones/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("delete")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
@@ -101,7 +106,6 @@ namespace Disqueria.Controllers
 
                 repo.Del(id);
                 repo.Save();
-
                 return RedirectToAction(nameof(Index));
             }
             catch

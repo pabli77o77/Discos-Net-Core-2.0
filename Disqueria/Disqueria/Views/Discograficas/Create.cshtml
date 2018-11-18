@@ -1,4 +1,4 @@
-﻿@model Disqueria.Models.Artista
+﻿@model Disqueria.Models.Discografica
 
 @{
     ViewData["Title"] = "Create";
@@ -6,7 +6,7 @@
 
 <h2>Create</h2>
 
-<h4>Artista</h4>
+<h4>Discografica</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -16,10 +16,6 @@
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GeneroID" class="control-label"></label>
-                <select asp-for="GeneroID" class ="form-control" asp-items="ViewBag.GeneroID"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

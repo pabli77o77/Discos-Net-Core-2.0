@@ -22,9 +22,9 @@ namespace Disqueria.Models
         public int ArtistaID { get; set; }
         public Genero Genero { get; set; }
         public int GeneroID { get; set; }
-        //public Canciones Canciones { get; set; }
-        public List<Cancion> ListaCanciones { get; set; }
         public Discografica Discografica { get; set; }
         public int DiscograficaID { get; set; }
+        public string ImageUrl { get; set; }
+        public string ImageThumbnailUrl { get; set; }
     }
 }
