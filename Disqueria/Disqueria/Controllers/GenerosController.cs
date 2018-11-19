@@ -17,25 +17,25 @@ namespace Disqueria.Controllers
             this.repo = _repo;
 
         }
-        // GET: Canciones
+        // GET: Generos
         public ActionResult Index()
         {
-            return View();
+            return View(repo.GetAll());
         }
 
-        // GET: Canciones/Details/5
+        // GET: Generos/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View(repo.GetID(id));
         }
 
-        // GET: Canciones/Create
+        // GET: Generos/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Canciones/Create
+        // POST: Generos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Genero model)
@@ -57,21 +57,26 @@ namespace Disqueria.Controllers
             }
         }
 
-        // GET: Canciones/Edit/5
+        // GET: Generos/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(repo.GetID(id));
         }
 
-        // POST: Canciones/Edit/5
+        // POST: Generos/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Genero model)
         {
             try
             {
                 // TODO: Add update logic here
-
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                repo.Update(model);
+                repo.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -80,14 +85,14 @@ namespace Disqueria.Controllers
             }
         }
 
-        // GET: Canciones/Delete/5
+        // GET: Generos/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(repo.GetID(id));
         }
 
-        // POST: Canciones/Delete/5
-        [HttpPost]
+        // POST: Generos/Delete/5
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {

@@ -9,7 +9,7 @@ namespace Disqueria.Models
         [Key]
         [Display(Name ="ID")]
         public int GeneroID { get; set; }
-        [MaxLength]
+        [MaxLength(100)]
         [Required(ErrorMessage ="Nombre obligatorio")]
         [Column("Genero")]
         [Display(Name = "Genero")]

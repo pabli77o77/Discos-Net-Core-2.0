@@ -29,13 +29,13 @@ namespace Disqueria.Controllers
             return View(repo.GetID(id));
         }
 
-        // GET: Canciones/Create
+        // GET: Discos/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Canciones/Create
+        // POST: Discos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Disco model)
@@ -57,7 +57,7 @@ namespace Disqueria.Controllers
             }
         }
 
-        // GET: Canciones/Edit/5
+        // GET: Discos/Edit/5
         public ActionResult Edit(int id)
         {
             return View(repo.GetID(id));

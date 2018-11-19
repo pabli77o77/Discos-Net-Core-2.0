@@ -11,6 +11,8 @@ namespace Disqueria.DAL
         public GeneroRepository(ApplicationDbContext context) : base(context)
         { }
 
+        //public IEnumerable<>
+
         public ApplicationDbContext GeneroContext
         {
             get { return context as ApplicationDbContext; }
