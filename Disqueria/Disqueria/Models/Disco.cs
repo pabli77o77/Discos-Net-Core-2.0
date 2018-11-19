@@ -20,8 +20,13 @@ namespace Disqueria.Models
         public string Titulo { get; set; }
         public Artista Artista { get; set; }
         public int ArtistaID { get; set; }
-        public Genero Genero { get; set; }
-        public int GeneroID { get; set; }
+        //public Genero Genero { get; set; }
+        //public int GeneroID { get; set; }
+        public ICollection<Genero> Generos { get; set; }
+        public Disco()
+        {
+            this.Generos = new HashSet<Genero>();
+        }
         public Discografica Discografica { get; set; }
         public int DiscograficaID { get; set; }
     }
