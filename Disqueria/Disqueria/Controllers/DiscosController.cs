@@ -32,6 +32,11 @@ namespace Disqueria.Controllers
         // GET: Discos/Create
         public ActionResult Create()
         {
+            ViewData["Genero"] = new Genero()
+            {
+                GeneroID = 1,
+                Nombre = "Rock"
+            };
             return View();
         }
 

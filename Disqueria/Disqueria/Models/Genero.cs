@@ -14,5 +14,6 @@ namespace Disqueria.Models
         [Column("Genero")]
         [Display(Name = "Genero")]
         public string Nombre { get; set; }
+        
     }
 }
