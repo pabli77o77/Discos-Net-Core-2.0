@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Disqueria.DAL;
 using Disqueria.Models;
+using Disqueria.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,19 +12,30 @@ namespace Disqueria.Controllers
 {
     public class DiscosController : Controller
     {
-        protected readonly IGenericRepository<Disco> repo;
-        public DiscosController(IGenericRepository<Disco> _repo)
+        //protected readonly IGenericRepository<Disco> repo;
+        protected readonly IDiscoRepository repo;
+        public DiscosController(IDiscoRepository _repo)
         {
             this.repo = _repo;
 
         }
-        // GET: Canciones
+        // GET: Discos
         public ActionResult Index()
         {
-            return View(repo.GetAll());
+            return View(repo.Grilla());
         }
 
-        // GET: Canciones/Details/5
+        public ActionResult Grilla(string filter = null, int page = 1,
+          int pageSize = 5, string sort = "Nombre", string sortdir = "ASC")
+        {
+            var ret = repo.PagedGrid(pageSize, page, filter, sort, sortdir);
+            ViewBag.filter = filter;
+
+
+            return View(ret);
+        }
+
+        // GET: Discos/Details/5
         public ActionResult Details(int id)
         {
             return View(repo.GetID(id));
@@ -32,18 +44,14 @@ namespace Disqueria.Controllers
         // GET: Discos/Create
         public ActionResult Create()
         {
-            ViewData["Genero"] = new Genero()
-            {
-                GeneroID = 1,
-                Nombre = "Rock"
-            };
-            return View();
+            
+            return View(repo.Get_Edicion(null));
         }
 
         // POST: Discos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Disco model)
+        public ActionResult Create(DiscoEdicion vm)
         {
             try
             {
@@ -52,7 +60,7 @@ namespace Disqueria.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                repo.Add(model);
+                repo.Add(vm.Edicion);
                 repo.Save();
                 return RedirectToAction(nameof(Index));
             }
@@ -65,13 +73,13 @@ namespace Disqueria.Controllers
         // GET: Discos/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(repo.GetID(id));
+            return View(repo.Get_Edicion(id));
         }
 
         // POST: Canciones/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Disco model)
+        public ActionResult Edit(DiscoEdicion vm)
         {
             try
             {
@@ -80,7 +88,7 @@ namespace Disqueria.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                repo.Update(model);
+                repo.Update(vm.Edicion);
                 repo.Save();
                 return RedirectToAction(nameof(Index));
             }

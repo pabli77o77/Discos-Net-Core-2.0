@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Disqueria.Models.Disco>
+﻿@model IEnumerable<Disqueria.ViewModel.DiscoVM>
 
 @{
     ViewData["Title"] = "Index";
@@ -19,10 +19,19 @@
                 @Html.DisplayNameFor(model => model.Artista)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ArtistaID)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Genero)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.GeneroID)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Discografica)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiscograficaID)
             </th>
             <th></th>
         </tr>
@@ -34,13 +43,22 @@
                 @Html.DisplayFor(modelItem => item.Titulo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Artista.Nombre)
+                @Html.DisplayFor(modelItem => item.Artista)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Genero.Nombre)
+                @Html.DisplayFor(modelItem => item.ArtistaID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Discografica.Nombre)
+                @Html.DisplayFor(modelItem => item.Genero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GeneroID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discografica)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiscograficaID)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.DiscoID">Edit</a> |
