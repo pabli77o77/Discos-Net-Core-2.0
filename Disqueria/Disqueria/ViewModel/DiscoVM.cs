@@ -8,11 +8,10 @@ namespace Disqueria.ViewModel
 {
     public class DiscoVM
     {
-        [Key]
-        [Display(Name = "ID")]
+        //[Key]
         public int DiscoID { get; set; }
-        [MaxLength(100)]
-        [Required(ErrorMessage = "El título del disco es obligatorio")]
+        //[MaxLength(100)]
+        //[Required(ErrorMessage = "El título del disco es obligatorio")]
         public string Titulo { get; set; }
         public string Artista { get; set; }
         public int ArtistaID { get; set; }

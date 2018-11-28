@@ -10,8 +10,11 @@ namespace Disqueria.ViewModel
     public class DiscoEdicion
     {
         public DiscoVM Edicion { get; set; }
+        public int DiscoID { get; set; }
         public List<SelectListItem> Generos { get; set; }
         public List<SelectListItem> Discograficas { get; set; }
         public List<SelectListItem> Artistas { get; set; }
+
+        
     }
 }

@@ -28,11 +28,20 @@ namespace Disqueria
         {
             services.AddDbContext<ApplicationDbContext>(options =>
          options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+            services.AddCors(options => options.AddPolicy("Cors", builder =>
+            {
+                builder.AllowAnyOrigin().
+                AllowAnyMethod().
+                AllowAnyHeader();
+            }));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddMvc();
-
+            services.AddScoped<IDiscoRepository, DiscoRepository>();
+            services.AddScoped<IDiscograficaRepository, DiscograficaRepository>();
+            services.AddScoped<IGeneroRepository, GeneroRepository>();
+            services.AddScoped<IArtsitaRepository, ArtistaRepository>();
+            //services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

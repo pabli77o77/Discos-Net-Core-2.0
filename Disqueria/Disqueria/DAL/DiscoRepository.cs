@@ -105,10 +105,6 @@ namespace Disqueria.DAL
             return records;
         }
 
-        //public DiscoRepository(ApplicationDbContext context) : base(context)
-        //{ }
-
-
         public ApplicationDbContext DiscoContext
         {
             get { return context as ApplicationDbContext; }

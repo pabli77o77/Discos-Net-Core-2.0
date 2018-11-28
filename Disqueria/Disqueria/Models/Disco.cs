@@ -24,5 +24,6 @@ namespace Disqueria.Models
         public int GeneroID { get; set; }
         public Discografica Discografica { get; set; }
         public int DiscograficaID { get; set; }
+        public Disco() { }
     }
 }
