@@ -14,7 +14,6 @@ namespace Disqueria.Models
         [Column("Artista")]
         [Display(Name = "Artista")]
         public string Nombre { get; set; }
-        public Genero Genero { get; set; }
-        public int GeneroID { get; set; }
+  
     }
 }

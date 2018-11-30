@@ -12,10 +12,11 @@ namespace Disqueria.Controllers
 {
     public class DiscosController : Controller
     {
-        //protected readonly IGenericRepository<Disco> repo;
+        //creao una instancia del "service";
         protected readonly IDiscoRepository repo;
         public DiscosController(IDiscoRepository _repo)
         {
+            // lo llamo y lo inicializo en el controlador
             this.repo = _repo;
 
         }
