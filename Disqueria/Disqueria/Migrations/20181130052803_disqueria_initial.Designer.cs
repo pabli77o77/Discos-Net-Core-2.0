@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Disqueria.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181119233343_disqueria")]
-    partial class disqueria
+    [Migration("20181130052803_disqueria_initial")]
+    partial class disqueria_initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,8 +26,6 @@ namespace Disqueria.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("GeneroID");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnName("Artista")
@@ -35,16 +33,17 @@ namespace Disqueria.Migrations
 
                     b.HasKey("ArtistaID");
 
-                    b.HasIndex("GeneroID");
-
                     b.ToTable("Artistas");
                 });
 
             modelBuilder.Entity("Disqueria.Models.Disco", b =>
                 {
                     b.Property<int>("DiscoID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("DiscoID");
+
+                    b.Property<string>("Titulo")
+                        .HasColumnName("Titulo")
+                        .HasMaxLength(100);
 
                     b.Property<int>("ArtistaID");
 
@@ -52,12 +51,9 @@ namespace Disqueria.Migrations
 
                     b.Property<int>("GeneroID");
 
-                    b.Property<string>("Titulo")
-                        .IsRequired()
-                        .HasColumnName("Disco")
-                        .HasMaxLength(100);
+                    b.HasKey("DiscoID", "Titulo");
 
-                    b.HasKey("DiscoID");
+                    b.HasAlternateKey("DiscoID");
 
                     b.HasIndex("ArtistaID");
 
@@ -84,10 +80,26 @@ namespace Disqueria.Migrations
                     b.ToTable("Discograficas");
                 });
 
+            modelBuilder.Entity("Disqueria.Models.Entidad", b =>
+                {
+                    b.Property<int>("EntidadID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("EntidadID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("TipoEntidad")
+                        .HasColumnName("TipoEntidad");
+
+                    b.HasKey("EntidadID");
+
+                    b.ToTable("Entidad");
+                });
+
             modelBuilder.Entity("Disqueria.Models.Genero", b =>
                 {
                     b.Property<int>("GeneroID")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("GeneroID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Nombre")
@@ -103,8 +115,10 @@ namespace Disqueria.Migrations
             modelBuilder.Entity("Disqueria.ViewModel.DiscoVM", b =>
                 {
                     b.Property<int>("DiscoID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("DiscoID");
+
+                    b.Property<string>("Titulo")
+                        .HasMaxLength(100);
 
                     b.Property<string>("Artista");
 
@@ -118,21 +132,11 @@ namespace Disqueria.Migrations
 
                     b.Property<int>("GeneroID");
 
-                    b.Property<string>("Titulo")
-                        .IsRequired()
-                        .HasMaxLength(100);
+                    b.HasKey("DiscoID", "Titulo");
 
-                    b.HasKey("DiscoID");
+                    b.HasAlternateKey("DiscoID");
 
                     b.ToTable("DiscoVM");
-                });
-
-            modelBuilder.Entity("Disqueria.Models.Artista", b =>
-                {
-                    b.HasOne("Disqueria.Models.Genero", "Genero")
-                        .WithMany()
-                        .HasForeignKey("GeneroID")
-                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Disqueria.Models.Disco", b =>

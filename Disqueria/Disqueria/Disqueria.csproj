@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20181127235448_discoConfig.cs" />
-    <Compile Remove="Migrations\20181128020340_discoConfig1.cs" />
-    <Compile Remove="Migrations\20181130004742_discovm.cs" />
+    <Compile Remove="Migrations\20181130052500_disqueria_initial.cs" />
   </ItemGroup>
 
   <ItemGroup>

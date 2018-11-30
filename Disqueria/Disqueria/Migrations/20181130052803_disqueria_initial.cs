@@ -3,10 +3,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Disqueria.Migrations
 {
-    public partial class Initial : Migration
+    public partial class disqueria_initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Artistas",
+                columns: table => new
+                {
+                    ArtistaID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Artista = table.Column<string>(maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Artistas", x => x.ArtistaID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Discograficas",
                 columns: table => new
@@ -21,12 +34,44 @@ namespace Disqueria.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DiscoVM",
+                columns: table => new
+                {
+                    DiscoID = table.Column<int>(nullable: false),
+                    Titulo = table.Column<string>(maxLength: 100, nullable: false),
+                    Artista = table.Column<string>(nullable: true),
+                    ArtistaID = table.Column<int>(nullable: false),
+                    Genero = table.Column<string>(nullable: true),
+                    GeneroID = table.Column<int>(nullable: false),
+                    Discografica = table.Column<string>(nullable: true),
+                    DiscograficaID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DiscoVM", x => new { x.DiscoID, x.Titulo });
+                    table.UniqueConstraint("AK_DiscoVM_DiscoID", x => x.DiscoID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Entidad",
+                columns: table => new
+                {
+                    EntidadID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    TipoEntidad = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Entidad", x => x.EntidadID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Generos",
                 columns: table => new
                 {
                     GeneroID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Genero = table.Column<string>(nullable: false)
+                    Genero = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,39 +79,19 @@ namespace Disqueria.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Artistas",
-                columns: table => new
-                {
-                    ArtistaID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Artista = table.Column<string>(maxLength: 100, nullable: false),
-                    GeneroID = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Artistas", x => x.ArtistaID);
-                    table.ForeignKey(
-                        name: "FK_Artistas_Generos_GeneroID",
-                        column: x => x.GeneroID,
-                        principalTable: "Generos",
-                        principalColumn: "GeneroID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Discos",
                 columns: table => new
                 {
-                    DiscoID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Disco = table.Column<string>(maxLength: 100, nullable: false),
+                    DiscoID = table.Column<int>(nullable: false),
+                    Titulo = table.Column<string>(maxLength: 100, nullable: false),
                     ArtistaID = table.Column<int>(nullable: false),
                     GeneroID = table.Column<int>(nullable: false),
                     DiscograficaID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Discos", x => x.DiscoID);
+                    table.PrimaryKey("PK_Discos", x => new { x.DiscoID, x.Titulo });
+                    table.UniqueConstraint("AK_Discos_DiscoID", x => x.DiscoID);
                     table.ForeignKey(
                         name: "FK_Discos_Artistas_ArtistaID",
                         column: x => x.ArtistaID,
@@ -87,37 +112,6 @@ namespace Disqueria.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Canciones",
-                columns: table => new
-                {
-                    CancionID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Cancion = table.Column<string>(maxLength: 100, nullable: false),
-                    Duracion = table.Column<string>(nullable: true),
-                    DiscoID = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Canciones", x => x.CancionID);
-                    table.ForeignKey(
-                        name: "FK_Canciones_Discos_DiscoID",
-                        column: x => x.DiscoID,
-                        principalTable: "Discos",
-                        principalColumn: "DiscoID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Artistas_GeneroID",
-                table: "Artistas",
-                column: "GeneroID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Canciones_DiscoID",
-                table: "Canciones",
-                column: "DiscoID");
-
             migrationBuilder.CreateIndex(
                 name: "IX_Discos_ArtistaID",
                 table: "Discos",
@@ -137,10 +131,13 @@ namespace Disqueria.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Canciones");
+                name: "Discos");
 
             migrationBuilder.DropTable(
-                name: "Discos");
+                name: "DiscoVM");
+
+            migrationBuilder.DropTable(
+                name: "Entidad");
 
             migrationBuilder.DropTable(
                 name: "Artistas");

@@ -6,7 +6,7 @@
 <h2>Create</h2>
 <h4>Disco</h4>
 <hr />
-<div class="container">
+<div class="container" asp-validation-summary="All">
     <div class="col-md-4">
         <form asp-action="Create" method="post">
             <div class="form-group">
@@ -15,17 +15,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="Edicion.Genero">Género</label><br />
-                @Html.DropDownListFor(x => x.Edicion.GeneroID, Model.Generos, htmlAttributes: new { @id = "GeneroId", @class = "form-control" })
+                @Html.DropDownListFor(x => x.Edicion.GeneroID, Model.Generos, "Seleccione un género", htmlAttributes: new { @id = "GeneroId", @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Edicion.GeneroID, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <label asp-for="Edicion.Artista">Artista</label><br />
-                @Html.DropDownListFor(x => x.Edicion.ArtistaID, Model.Artistas, htmlAttributes: new { @id = "ArtistaId", @class = "form-control" })
+                @Html.DropDownListFor(x => x.Edicion.ArtistaID, Model.Artistas, "Seleccione un artista", htmlAttributes: new { @id = "ArtistaId", @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Edicion.ArtistaID, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <label asp-for="Edicion.Discografica">Discográfica</label><br />
-                @Html.DropDownListFor(x => x.Edicion.DiscograficaID, Model.Discograficas, htmlAttributes: new { @id = "DiscograficaID", @class = "form-control" })
+                @Html.DropDownListFor(x => x.Edicion.DiscograficaID, Model.Discograficas, "Seleccione una discográfica", htmlAttributes: new { @id = "DiscograficaID", @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Edicion.DiscograficaID, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
